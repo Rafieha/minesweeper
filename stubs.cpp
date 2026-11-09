@@ -23,22 +23,44 @@ void initBoard()
     gameOver = false;
 }
 
-void placeMines()
-{
-    srand((unsigned)time(NULL));
-    for (int i = 0; i < 10; i++)
-        mines[rand() % ROWS][rand() % COLS] = 1;
+void placeMines() {
+    int placed = 0;
+    while (placed < NUM_MINES) {
+        int r = rand() % ROWS;
+        int c = rand() % COLS;
+        if (!mines[r][c]) {         
+            mines[r][c] = true;
+            placed++;
+        }
+    }
+
+int countNeighbours(int r, int c) {
+    int n = 0;
+    for (int dr = -1; dr <= 1; dr++)
+        for (int dc = -1; dc <= 1; dc++) {
+            if (dr == 0 && dc == 0) continue;
+            int nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && mines[nr][nc])
+                n++;
+        }
+    return n;
+}
+void revealAllMines() {
+    for (int r = 0; r < ROWS; r++)
+        for (int c = 0; c < COLS; c++)
+            if (mines[r][c]) state[r][c] = 1;
 }
 
-void countNeighbours() {}
-void revealAllMines() {}
+void revealTile(int r, int c) {
+    if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;  
+    if (state[r][c] != 0) return;                         
 
-void revealTile(int r, int c)
-{
     state[r][c] = 1;
-    if (mines[r][c] == 1) gameOver = true;
-}
 
+    if (mines[r][c]) {
+        gameOver = true;
+        return;
+    }
 void drawBoard()
 {
     for (int r = 0; r < ROWS; r++)
