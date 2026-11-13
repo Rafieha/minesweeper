@@ -6,7 +6,8 @@
 const int ROWS = 9;
 const int COLS = 9;
 const int CELL = 50;   // size of one tile in pixels
-const int TOP = 60;   // height of the top bar in pixels
+const int TOP = 60;// height of the top bar in pixels
+const int NUM_MINES = 10;
 
 const int SCREEN_W = COLS * CELL;
 const int SCREEN_H = TOP + ROWS * CELL;
