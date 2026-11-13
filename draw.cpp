@@ -11,12 +11,7 @@ static int tileX(int c) { return c * CELL; }
 static int tileY(int r) { return TOP + r * CELL; }
 
 // Reveal every mine (called on game over)
-void revealAllMines()
-{
-    for (int r = 0; r < ROWS; r++)
-        for (int c = 0; c < COLS; c++)
-            if (mines[r][c]) state[r][c] = 1;
-}
+
 
 // Title text
 void drawTopBar()
@@ -98,11 +93,11 @@ void drawGameOver()
 {
     if (gameOver)
     {
-        DrawText("Game Over", 10, TOP / 2 - 15, 30, RED);
+        DrawText("Game Over", SCREEN_W-160,TOP/2-12,24,RED);
     }
     else if (gameWon)
     {
-        DrawText("You Win!", 10, TOP / 2 - 15, 30, GREEN);
+        DrawText("You Win!", SCREEN_W-160,TOP/2-12,24,GREEN);
     }
     else
     {
