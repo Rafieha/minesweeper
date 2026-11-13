@@ -94,10 +94,20 @@ void drawMine(int r, int c)
     DrawCircle(cx - rad / 3, cy - rad / 3, rad / 4, WHITE); // shine
 }
 
-// "Game Over" message
 void drawGameOver()
 {
-    DrawText("Game Over", 10, TOP / 2 - 15, 30, RED);
+    if (gameOver)
+    {
+        DrawText("Game Over", 10, TOP / 2 - 15, 30, RED);
+    }
+    else if (gameWon)
+    {
+        DrawText("You Win!", 10, TOP / 2 - 15, 30, GREEN);
+    }
+    else
+    {
+        // game still running, draw nothing
+    }
 }
 
 // Loops through the grid and calls the functions above
