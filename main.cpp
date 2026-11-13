@@ -1,5 +1,4 @@
 
-// main.cpp - Person 1: window, main loop and mouse input
 #include "raylib.h"
 #include "globals.h"
 
@@ -28,7 +27,7 @@ void handleLeftClick()
 
     if (state[r][c] == 0)       // 0 = covered
     {
-        revealTile(r, c);       // Person 2's function
+        revealTile(r, c); 
     }
 }
 
@@ -64,10 +63,10 @@ int main()
             if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) handleRightClick();
         }
 
-        // ---- drawing ----
+        // drawing
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        drawBoard();             // Person 3's function
+        drawBoard();           
         EndDrawing();
     }
 
