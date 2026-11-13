@@ -3,8 +3,12 @@
 #include <ctime>
 
 // Global variables
+const int ROWS = 9;
+const int COLS = 9;
+const int NUM_MINES = 10;      // define this once, at the top with ROWS and COLS
 
-int mines[ROWS][COLS];
+bool mines[ROWS][COLS];        // true = mine
+
 int counts[ROWS][COLS];
 int state[ROWS][COLS];
 bool gameOver = false;
@@ -21,18 +25,17 @@ void initBoard()
         }
     gameOver = false;
 }
-
-// Function 2
 void placeMines()
 {
     int placed = 0;
     while (placed < NUM_MINES) {
         int r = rand() % ROWS;
         int c = rand() % COLS;
-        if (!mines[r][c]) {
+        if (!mines[r][c]) {    // only place if there is no mine here yet
             mines[r][c] = true;
             placed++;
         }
+    }
 }
 
 // Function 3
