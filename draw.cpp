@@ -133,5 +133,5 @@ void drawBoard()
         }
     }
 
-    if (gameOver) drawGameOver();
+    drawGameOver();
 }
