@@ -2,16 +2,12 @@
 #include <cstdlib>
 #include <ctime>
 
-// Global variables
-const int ROWS = 9;
-const int COLS = 9;
-const int NUM_MINES = 10;      // define this once, at the top with ROWS and COLS
-
-bool mines[ROWS][COLS];        // true = mine
-
+// Global variables (ROWS, COLS, NUM_MINES come from globals.h)
+int mines[ROWS][COLS];        // true = mine
 int counts[ROWS][COLS];
-int state[ROWS][COLS];
+int state[ROWS][COLS];         // 0 = covered, 1 = revealed, 2 = flagged
 bool gameOver = false;
+
 
 // Function 1
 void initBoard()
@@ -39,19 +35,23 @@ void placeMines()
 }
 
 // Function 3
+
 void countNeighbours()
 {
-    int n = 0;
-    for (int dr = -1; dr <= 1; dr++)
-        for (int dc = -1; dc <= 1; dc++) {
-            if (dr == 0 && dc == 0) continue;
-            int nr = r + dr, nc = c + dc;
-            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && mines[nr][nc])
-                n++;
+    for (int r = 0; r < ROWS; r++)
+        for (int c = 0; c < COLS; c++)
+        {
+            int n = 0;
+            for (int dr = -1; dr <= 1; dr++)
+                for (int dc = -1; dc <= 1; dc++) {
+                    if (dr == 0 && dc == 0) continue;
+                    int nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && mines[nr][nc])
+                        n++;
+                }
+            counts[r][c] = n;
         }
-    return n;
 }
-
 // Function 4
 void revealTile(int r, int c)
 {
