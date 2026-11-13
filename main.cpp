@@ -56,7 +56,7 @@ int main()
 
     while (!WindowShouldClose())
     {
-        // ---- input (clicks are ignored after the game is over) ----
+        // input (clicks are ignored after the game is over) 
         if (!gameOver)
         {
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))  handleLeftClick();
