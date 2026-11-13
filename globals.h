@@ -1,8 +1,8 @@
-// globals.h - shared by everyone. Agree on these names before coding.
+
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-// ---------- Constants ----------
+//Constants 
 const int ROWS = 9;
 const int COLS = 9;
 const int CELL = 50;   // size of one tile in pixels
@@ -12,23 +12,23 @@ const int NUM_MINES = 10;
 const int SCREEN_W = COLS * CELL;
 const int SCREEN_H = TOP + ROWS * CELL;
 
-// ---------- Shared data (defined in logic.cpp by Person 2) ----------
+//Shared data defined in logic.cpp
 extern int  mines[ROWS][COLS];   // 1 = mine, 0 = no mine
 extern int  counts[ROWS][COLS];  // number of mines around the tile
 extern int  state[ROWS][COLS];   // 0 = covered, 1 = revealed, 2 = flagged
 extern bool gameOver;
 
-// ---------- Person 2: game logic (logic.cpp) ----------
+// game logic (logic.cpp)
 void initBoard();
 void placeMines();
 void countNeighbours();
 void revealTile(int r, int c);   // sets gameOver = true if it is a mine
 void revealAllMines();
 
-// ---------- Person 3: drawing (draw.cpp) ----------
+//drawing (draw.cpp) 
 void drawBoard();                // draws top bar, tiles, numbers, flags, game over
 
-// ---------- Person 1: setup and input (main.cpp) ----------
+// setup and input (main.cpp)
 bool getClickedTile(int& row, int& col);
 void handleLeftClick();
 void handleRightClick();
