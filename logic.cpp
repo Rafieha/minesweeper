@@ -7,6 +7,7 @@ int mines[ROWS][COLS];        // true = mine
 int counts[ROWS][COLS];
 int state[ROWS][COLS];         // 0 = covered, 1 = revealed, 2 = flagged
 bool gameOver = false;
+bool gameWon = false;
 
 
 // Function 1
@@ -20,6 +21,7 @@ void initBoard()
             state[r][c] = 0;
         }
     gameOver = false;
+    gameWon = false;
 }
 void placeMines()
 {
@@ -62,6 +64,7 @@ void revealTile(int r, int c)
 
     if (mines[r][c]) {
         gameOver = true;
+        revealAllMines();
         return;
     }
 }
