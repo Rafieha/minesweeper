@@ -1,5 +1,5 @@
-// draw.cpp - Person 3: Drawing
-// Uses shared globals from globals.h:
+// draw.cpp 
+// Uses  globals from globals.h:
 //   ROWS, COLS, CELL, TOP
 //   mines[][], counts[][], state[][]  (0 = covered, 1 = revealed, 2 = flagged)
 //   gameOver
