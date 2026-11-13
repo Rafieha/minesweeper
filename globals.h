@@ -1,6 +1,4 @@
-
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#pragma once
 
 //Constants 
 const int ROWS = 9;
@@ -17,6 +15,7 @@ extern int  mines[ROWS][COLS];   // 1 = mine, 0 = no mine
 extern int  counts[ROWS][COLS];  // number of mines around the tile
 extern int  state[ROWS][COLS];   // 0 = covered, 1 = revealed, 2 = flagged
 extern bool gameOver;
+extern bool gameWon;
 
 // game logic (logic.cpp)
 void initBoard();
@@ -32,5 +31,3 @@ void drawBoard();                // draws top bar, tiles, numbers, flags, game o
 bool getClickedTile(int& row, int& col);
 void handleLeftClick();
 void handleRightClick();
-
-#endif#pragma once
