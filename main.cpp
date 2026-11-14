@@ -3,8 +3,7 @@
 #include "globals.h"
 
 // Converts the mouse position into a row and column.
-// Returns true if the mouse is inside the grid, false if it is outside
-// (for example on the top bar).
+// Returns true if the mouse is inside the grid, false if it is outside (like on the top bar)
 bool getClickedTile(int& row, int& col)
 {
     int x = GetMouseX();
@@ -19,7 +18,7 @@ bool getClickedTile(int& row, int& col)
     return true;
 }
 
-// Left click: reveal the tile if it is covered (not flagged, not revealed).
+// Left click: reveal the tile if it is covered (not flagged, not revealed) 
 void handleLeftClick()
 {
     int r, c;
@@ -31,7 +30,7 @@ void handleLeftClick()
     }
 }
 
-// Right click: flag a covered tile, or remove the flag if it is already flagged.
+// Right click: flag a covered tile, or remove the flag if it is already flagged 
 void handleRightClick()
 {
     int r, c;
