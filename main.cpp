@@ -36,9 +36,9 @@ void handleRightClick()
     int r, c;
     if (!getClickedTile(r, c)) return;
 
-    if (state[r][c] == 0)        // covered -> flag it
+    if (state[r][c] == 0)        // covered - flag it
         state[r][c] = 2;
-    else if (state[r][c] == 2)   // flagged -> unflag it
+    else if (state[r][c] == 2)   // flagged - unflag it
         state[r][c] = 0;
     // revealed tiles (1) are left alone
 }
