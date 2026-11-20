@@ -1,9 +1,12 @@
-
 #include "raylib.h"
 #include "globals.h"
+#include <cstdlib>
+#include <ctime>
 
-// Converts the mouse position into a row and column.
-// Returns true if the mouse is inside the grid, false if it is outside (like on the top bar)
+bool firstClick = true;       // true until the player makes the first reveal
+int  numMines = NUM_MINES;    // current number of mines (changed by difficulty)
+
+// Converts the mouse position into a row and column
 bool getClickedTile(int& row, int& col)
 {
     int x = GetMouseX();
@@ -17,29 +20,61 @@ bool getClickedTile(int& row, int& col)
     row = (y - TOP) / CELL;
     return true;
 }
+// Returns true if the mouse is over the restart button in the top bar
+bool clickedRestartButton()
+{
+    int x = GetMouseX();
+    int y = GetMouseY();
 
-// Left click: reveal the tile if it is covered (not flagged, not revealed) 
+    return x >= BTN_X && x < BTN_X + BTN_W &&
+           y >= BTN_Y && y < BTN_Y + BTN_H;
+}
+
+// Starts a fresh game. Mines are placed on the first click, so the first tile is always safe 
+void resetGame()
+{
+    initBoard();          // clears arrays, gameOver and gameWon (logic.cpp)
+    firstClick = true;
+}
+
+// Changes the number of mines and starts a new game
+void setDifficulty(int mines)
+{
+    numMines = mines;
+    resetGame();
+}
+
 void handleLeftClick()
 {
     int r, c;
-    if (!getClickedTile(r, c)) return;
+if (!getClickedTile(r, c)) return;
 
-    if (state[r][c] == 0)       // 0 = covered
+    if (state[r][c] != 0) return;     // only covered tiles can be revealed
+
+    if (firstClick)
     {
-        revealTile(r, c); 
+        placeMines(r, c);             // mines avoid the clicked tile and its neighbours
+        countNeighbours();
+        firstClick = false;
     }
+
+    revealTile(r, c);
+    checkWin();                       // sets gameWon if all safe tiles are revealed
 }
 
-// Right click: flag a covered tile, or remove the flag if it is already flagged 
 void handleRightClick()
 {
     int r, c;
     if (!getClickedTile(r, c)) return;
 
-    if (state[r][c] == 0)        // covered - flag it
+    if (state[r][c] == 0) {       // covered - flag it
         state[r][c] = 2;
+         minesLeft--;
+    }
     else if (state[r][c] == 2)   // flagged - unflag it
         state[r][c] = 0;
+    minesLeft++;
+    }
     // revealed tiles (1) are left alone
 }
 
@@ -47,18 +82,27 @@ int main()
 {
     InitWindow(SCREEN_W, SCREEN_H, "Minesweeper");
     SetTargetFPS(60);
+     srand((unsigned)time(NULL));      // different mine layout every run
 
-    // set up a new game
-    initBoard();
-    placeMines();
-    countNeighbours();
+    resetGame();
 
     while (!WindowShouldClose())
     {
-        // input (clicks are ignored after the game is over) 
-        if (!gameOver)
+        // keys that work at any time
+        if (IsKeyPressed(KEY_R))     resetGame();
+        if (IsKeyPressed(KEY_ONE))   setDifficulty(10);   // easy
+        if (IsKeyPressed(KEY_TWO))   setDifficulty(15);   // medium
+        if (IsKeyPressed(KEY_THREE)) setDifficulty(20);   // hard
+
+        // restart button in the top bar
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && clickedRestartButton())
+            resetGame();
+
+        // board clicks are ignored once the game is won or lost
+        if (!gameOver && !gameWon)
         {
-            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))  handleLeftClick();
+            updateTimer();
+           if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))  handleLeftClick();
             if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) handleRightClick();
         }
 
