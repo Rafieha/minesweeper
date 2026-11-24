@@ -20,7 +20,7 @@ extern int  state[ROWS][COLS];
 extern bool gameOver;
 extern bool gameWon;
 extern int   minesLeft;          // mines minus flags placed
-extern float elapsedTime;        // seconds since the first click
+extern int elapsedTime;        // seconds since the first click
 
 // Shared data defined in main.cpp
 extern bool firstClick;          // true until the first reveal
