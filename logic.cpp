@@ -8,7 +8,6 @@ int counts[ROWS][COLS];
 int state[ROWS][COLS];         // 0 = covered, 1 = revealed, 2 = flagged
 bool gameOver = false;
 bool gameWon = false;
-bool firstClick = true;
 int flagsPlaced = 0;
 int minesLeft = NUM_MINES;
 bool timerRunning = false;
@@ -27,18 +26,6 @@ void initBoard()
         }
     gameOver = false;
     gameWon = false;
-}
-void placeMines()
-{
-    int placed = 0;
-    while (placed < NUM_MINES) {
-        int r = rand() % ROWS;
-        int c = rand() % COLS;
-        if (!mines[r][c]) {    // only place if there is no mine here yet
-            mines[r][c] = true;
-            placed++;
-        }
-    }
 }
 
 // Function 3
@@ -112,7 +99,7 @@ void newGame()
 }
 
 // ----- Safe first click -----
-void placeMinesSafe(int safeR, int safeC)
+void placeMines(int safeR, int safeC)
 {
     int placed = 0;
     while (placed < NUM_MINES) {
@@ -193,7 +180,7 @@ void revealCell(int r, int c)
     if (state[r][c] != 0) return;
 
     if (firstClick) {
-        placeMinesSafe(r, c);
+        placeMines(r, c);
         countNeighbours();
         startTimer();
         firstClick = false;
