@@ -44,38 +44,19 @@ void setDifficulty(int mines)
     resetGame();
 }
 
-void handleLeftClick()
-{
-    int r, c;
-if (!getClickedTile(r, c)) return;
-
-    if (state[r][c] != 0) return;     // only covered tiles can be revealed
-
-    if (firstClick)
-    {
-        placeMines(r, c);             // mines avoid the clicked tile and its neighbours
-        countNeighbours();
-        firstClick = false;
-    }
-
-    revealTile(r, c);
-    checkWin();                       // sets gameWon if all safe tiles are revealed
-}
-
 void handleRightClick()
 {
     int r, c;
     if (!getClickedTile(r, c)) return;
+    toggleFlag(r, c);
+}
+void handleLeftClick()
+{
+    int r, c;
+    if (!getClickedTile(r, c)) return;
 
-    if (state[r][c] == 0) {       // covered - flag it
-        state[r][c] = 2;
-         minesLeft--;
-    }
-    else if (state[r][c] == 2)   // flagged - unflag it
-        state[r][c] = 0;
-    minesLeft++;
-    }
-    // revealed tiles (1) are left alone
+    if (state[r][c] == 1) chordReveal(r, c);
+    else                  revealCell(r, c);
 }
 
 int main()
