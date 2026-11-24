@@ -123,6 +123,7 @@ void toggleFlag(int r, int c)
     if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
 
     if (state[r][c] == 0) {
+           if (flagsPlaced >= NUM_MINES) return; 
         state[r][c] = 2;
         flagsPlaced++;
     }
